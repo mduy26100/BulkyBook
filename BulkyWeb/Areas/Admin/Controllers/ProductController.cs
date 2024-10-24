@@ -94,9 +94,22 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
                     _unitOfWork.Product.Update(productVM.Product);
                 }
 
+                bool isNewProduct = productVM.Product.Id == 0;
+
+                if (isNewProduct)
+                {
+                    _unitOfWork.Product.Add(productVM.Product);
+                }
+                else
+                {
+                    _unitOfWork.Product.Update(productVM.Product);
+                }
+
                 _unitOfWork.Save();
-                TempData["success"] = "Product created successfully";
+
+                TempData["success"] = isNewProduct ? "Product created successfully" : "Product updated successfully";
                 return RedirectToAction("Index");
+
             }
             else
             {
