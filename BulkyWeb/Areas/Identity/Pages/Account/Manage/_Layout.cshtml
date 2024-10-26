@@ -1,5 +1,5 @@
 ﻿@{
-    if (ViewData.TryGetValue("ParentLayout", out var parentLayout) && parentLayout !=  null)
+    if (ViewData.TryGetValue("ParentLayout", out var parentLayout) && parentLayout != null)
     {
         Layout = parentLayout.ToString();
     }
@@ -9,17 +9,28 @@
     }
 }
 
-<h1>Manage your account</h1>
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <h1 class="display-5">Manage Your Account</h1>
+    </div>
 
-<div>
-    <h2>Change your account settings</h2>
-    <hr />
-    <div class="row">
-        <div class="col-md-3">
-            <partial name="_ManageNav" />
+    <div class="card shadow-lg border-0">
+        <div class="card-header bg-primary text-white text-center">
+            <h2>Change Your Account Settings</h2>
         </div>
-        <div class="col-md-9">
-            @RenderBody()
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="list-group">
+                        <partial name="_ManageNav" />
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="border p-4 rounded">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
