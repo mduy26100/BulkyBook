@@ -1,17 +1,11 @@
 ﻿using BulkyBook.DataAccess.Data;
 using BulkyBook.DataAccess.Repository.IRepository;
-using BulkyBook.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BulkyBook.DataAccess.Repository
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private ApplicationDbContext _db;
+        private readonly ApplicationDbContext _db;
 
         public ICategoryRepository Category { get; private set; }
         public ICompanyRepository Company { get; private set; }
@@ -21,16 +15,23 @@ namespace BulkyBook.DataAccess.Repository
         public IOrderDetailRepository OrderDetail { get; private set; }
         public IOrderHeaderRepository OrderHeader { get; private set; }
 
-        public UnitOfWork(ApplicationDbContext db)
+        public UnitOfWork(ApplicationDbContext db,
+                          ICategoryRepository categoryRepo,
+                          ICompanyRepository companyRepo,
+                          IProductRepository productRepo,
+                          IShoppingCartRepository shoppingCartRepo,
+                          IApplicationUserRepository applicationUserRepo,
+                          IOrderDetailRepository orderDetailRepo,
+                          IOrderHeaderRepository orderHeaderRepo)
         {
             _db = db;
-            ApplicationUser = new ApplicationUserRepository(_db);
-            ShoppingCart = new ShoppingCartRepository(_db);
-            Category = new CategoryRepository(_db);
-            Product = new ProductRepository(_db);
-            Company = new CompanyRepository(_db);
-            OrderHeader = new OrderHeaderRepository(_db);
-            OrderDetail = new OrderDetailRepository(_db);
+            Category = categoryRepo;
+            Company = companyRepo;
+            Product = productRepo;
+            ShoppingCart = shoppingCartRepo;
+            ApplicationUser = applicationUserRepo;
+            OrderDetail = orderDetailRepo;
+            OrderHeader = orderHeaderRepo;
         }
 
         public void Save()
